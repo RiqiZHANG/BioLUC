@@ -1,0 +1,3461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee" uses_arrays="1"/>
+		<name>Rollups</name>
+		<uuid>2d787ff0-d9f4-46a0-a1cf-2c9915f5ff15</uuid>
+		<vendor>isee systems, inc.</vendor>
+		<product version="3.5" isee:build_number="3121" isee:saved_by_v1="true" lang="en">Stella Architect</product>
+	</header>
+	<sim_specs isee:sim_duration="1.5" isee:run_prefix="Run" isee:simulation_delay="0.125" isee:restore_on_start="false" method="Euler" time_units="Time" isee:instantaneous_flows="false" isee:ignore_module_errors="false" isee:strict_units="false" isee:loop_scores="true" isee:loop_exhaustive_allowed="1000">
+		<start>0</start>
+		<stop>12</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<dimensions>
+		<dim name="AnimalProduct">
+			<elem name="CowSheepGoat"/>
+			<elem name="Dairy"/>
+			<elem name="Pig"/>
+			<elem name="Poultry"/>
+		</dim>
+		<dim name="Commodity">
+			<elem name="Maize"/>
+			<elem name="Wheat"/>
+			<elem name="Rice"/>
+			<elem name="OilCrop"/>
+			<elem name="Sugar"/>
+		</dim>
+		<dim name="Region">
+			<elem name="CAN_1"/>
+			<elem name="USA_1"/>
+			<elem name="CCAmerica_1"/>
+			<elem name="Brazil_1"/>
+			<elem name="SoAmer_1"/>
+			<elem name="REurope_1"/>
+			<elem name="EU27_1"/>
+			<elem name="OthCEECIS_1"/>
+			<elem name="MEASNAfr_1"/>
+			<elem name="SSAFR_1"/>
+			<elem name="Russia_1"/>
+			<elem name="CHIHKG_1"/>
+			<elem name="INDIA_1"/>
+			<elem name="RSASIA_1"/>
+			<elem name="EASIA_1"/>
+			<elem name="JAPAN_1"/>
+			<elem name="RSEASIA_1"/>
+			<elem name="MALAINDO_1"/>
+			<elem name="OCEANIA_1"/>
+		</dim>
+	</dimensions>
+	<isee:prefs saved_runs="5" keep="false" show_module_prefix="true" live_update_on_drag="true" show_restore_buttons="true" layer="model" isee:design="" isee:design_custom="false" interface_scale_ui="true" interface_max_page_width="10000" interface_max_page_height="10000" interface_min_page_width="0" interface_min_page_height="0" rerun_on_structure_change="false" rifp="false"/>
+	<isee:multiplayer_settings include_chat="true" allow_observers="false" advance_time_increment="1" max_advance_time_in_ms="0" model_stops_when_players_drop="false" observer_start_page="home_page" enabled="false"/>
+	<isee:time_formats default_format="Builtin">
+		<isee:time_format name="Builtin" type="adaptive"/>
+	</isee:time_formats>
+	<isee:number_format_extenders/>
+	<default_format/>
+	<model_units>
+		<unit name="Dimensionless">
+			<eqn>1</eqn>
+			<alias>dmnl</alias>
+			<alias>unitless</alias>
+			<alias>fraction</alias>
+		</unit>
+		<unit name="People">
+			<eqn/>
+			<alias>person</alias>
+			<alias>persons</alias>
+		</unit>
+		<unit name="Hectares">
+			<eqn/>
+			<alias>ha</alias>
+			<alias>hectare</alias>
+		</unit>
+		<unit name="Years">
+			<eqn/>
+			<alias>yr</alias>
+			<alias>year</alias>
+		</unit>
+		<unit name="Gg per Ha per Yr">
+			<eqn>Gg/(ha-yr)</eqn>
+		</unit>
+		<unit name="Gg per Person per Yr">
+			<eqn>Gg/(person-yr)</eqn>
+		</unit>
+		<unit name="Gigagrams">
+			<eqn>Gg</eqn>
+		</unit>
+		<unit name="ha per square km">
+			<eqn>ha/km^2</eqn>
+		</unit>
+		<unit name="hectares per person">
+			<eqn>Ha/person</eqn>
+		</unit>
+		<unit name="people per square kilometer">
+			<eqn>person/km^2</eqn>
+		</unit>
+	</model_units>
+	<model name="Global">
+		<variables>
+			<aux name="TOTAL potential CP exports" access="output">
+				<doc>Variable type:  Algebraic calculation
+
+Units:  Gg/yr
+
+Description:  Sums potential exports across all regions that have potential exports
+
+Notes:
+</doc>
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>potential_CP_exports_2[Commodity] + 
+potential_CP_exports_3[Commodity] + 
+potential_CP_exports_4[Commodity]+
+potential_CP_exports_5[Commodity]+
+potential_CP_exports_7[Commodity]+
+potential_CP_exports_6[Commodity]+
+potential_CP_exports_8[Commodity]+
+potential_CP_exports_9[Commodity]+
+potential_CP_exports_10[Commodity]+
+potential_CP_exports_11[Commodity]+
+potential_CP_exports_12[Commodity]+
+potential_CP_exports_13[Commodity]+
+potential_CP_exports_14[Commodity]+
+potential_CP_exports_15[Commodity]+
+potential_CP_exports_16[Commodity]+
+potential_CP_exports_17[Commodity]+
+potential_CP_exports_18[Commodity]+
+potential_CP_exports_19[Commodity]+
+potential_CP_exports1[Commodity]</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="TOTAL potential CP imports" access="output">
+				<doc>Variable type:  Algebraic calculation
+
+Units:  Gg/yr
+
+Description:  Sums required imports across all regions that require imports to satisfy regional demand.
+
+Notes:
+</doc>
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>potential_CP_imports_2[Commodity]+
+potential_CP_imports_3[Commodity]+
+potential_CP_imports_4[Commodity]+
+potential_CP_imports_5[Commodity]+
+potential_CP_imports_6[Commodity]+
+potential_CP_imports_7[Commodity]+
+potential_CP_imports_8[Commodity]+
+potential_CP_imports_9[Commodity]+
+potential_CP_imports_10[Commodity]+
+potential_CP_imports_11[Commodity]+
+potential_CP_imports_12[Commodity]+
+potential_CP_imports_13[Commodity]+
+potential_CP_imports_14[Commodity]+
+potential_CP_imports_15[Commodity]+
+potential_CP_imports_16[Commodity]+
+potential_CP_imports_17[Commodity]+
+potential_CP_imports_18[Commodity]+
+potential_CP_imports_19[Commodity]+
+potential_CP_imports_20[Commodity]</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="total interregional CP flow" access="output">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>MIN(TOTAL_potential_CP_exports[Commodity],TOTAL_potential_CP_imports[Commodity])</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="Near Pristine Land">
+				<doc>Variable type:  Algebraic calculationUnits:  haDescription:  Sums near pristine land category across all regions.Notes:</doc>
+				<eqn>NPL_63  +
+NPL_117  +
+NPL_123  +
+NPL_129  +
+NPL_135 +
+NPL_141 +
+NPL_147 +
+NPL_153 +
+NPL_159 +
+NPL_165 +
+NPL_171 +
+NPL_69 +
+NPL_75 +
+NPL_81 + 
+NPL_87 +
+NPL_93 + 
+NPL_99 +
+NPL_105 +
+NPL_111</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 63" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 69" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 75" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential CP imports 20" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports1" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 81" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 87" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 93" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 99" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential AP imports 20" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP exports 1" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 105" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 111" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 117" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 123" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 129" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 135" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 141" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 147" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="TOTAL desired AP exports" access="output">
+				<doc>Variable type:  Algebraic calculationUnits:  Gg/yrDescription:  Sums required imports across all regions that require imports to satisfy regional demand.Notes:</doc>
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>potentila_AP_exports_2[AnimalProduct] +
+potentila_AP_exports_3[AnimalProduct] +
+potentila_AP_exports_4[AnimalProduct] +
+potentila_AP_exports_5[AnimalProduct] +
+potentila_AP_exports_6[AnimalProduct] +
+potentila_AP_exports_7[AnimalProduct] +
+potentila_AP_exports_8[AnimalProduct] +
+potentila_AP_exports_9[AnimalProduct] +
+potentila_AP_exports_10[AnimalProduct] +
+potentila_AP_exports_11[AnimalProduct] +
+potentila_AP_exports_12[AnimalProduct] +
+potentila_AP_exports_13[AnimalProduct] +
+potentila_AP_exports_14[AnimalProduct] +
+potentila_AP_exports_15[AnimalProduct] +
+potentila_AP_exports_16[AnimalProduct] +
+potentila_AP_exports_17[AnimalProduct] +
+potentila_AP_exports_18[AnimalProduct] +
+potentila_AP_exports_19[AnimalProduct] +
+potential_AP_exports_1[AnimalProduct]</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="TOTAL potential AP imports" access="output">
+				<doc>Variable type:  Algebraic calculation
+
+Units:  Gg/yr
+
+Description:  Sums potential exports across all regions that have potential exports
+
+Notes:
+</doc>
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>potential_AP_imports_2[AnimalProduct] +
+potential_AP_imports_3[AnimalProduct] +
+potential_AP_imports_4[AnimalProduct] +
+potential_AP_imports_5[AnimalProduct] +
+potential_AP_imports_6[AnimalProduct] +
+potential_AP_imports_7[AnimalProduct] +
+potential_AP_imports_8[AnimalProduct] +
+potential_AP_imports_9[AnimalProduct] +
+potential_AP_imports_10[AnimalProduct] +
+potential_AP_imports_11[AnimalProduct] +
+potential_AP_imports_12[AnimalProduct] +
+potential_AP_imports_13[AnimalProduct]+
+potential_AP_imports_14[AnimalProduct] +
+potential_AP_imports_15[AnimalProduct] +
+potential_AP_imports_16[AnimalProduct] +
+potential_AP_imports_17[AnimalProduct] +
+potential_AP_imports_19[AnimalProduct] +
+potential_AP_imports_20[AnimalProduct] +
+potential_AP_imports_18</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="total interregional AP flow" access="output">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn> MIN(TOTAL_desired_AP_exports[AnimalProduct],TOTAL_potential_AP_imports[AnimalProduct])</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 153" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 159" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 165" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 171" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="Latent Land">
+				<doc>Variable type:  Algebraic calculationUnits:  haDescription:  Sums latent land category across all regions.Notes:</doc>
+				<eqn>NPL_62 +NPL_68 +NPL_74 +NPL_80 +NPL_86 +NPL_92 +NPL_98 +NPL_104 +NPL_110 +NPL_116 +NPL_122 +NPL_128 +NPL_134 +NPL_140 +NPL_146 +NPL_152 +NPL_158 +NPL_164 +NPL_170</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 62" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="GDP mod pct">
+				<doc>Variable type:  Constant; end-user inputUnits:  UnitlessDescription:  User specifies percentage change in regional GDP, relative to baseline scenario.  Change then ramps in over period 2015-2020.Notes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<element subscript="CAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="USA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CCAmerica_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Brazil_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SoAmer_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="REurope_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EU27_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OthCEECIS_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MEASNAfr_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SSAFR_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Russia_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CHIHKG_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="INDIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="JAPAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSEASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MALAINDO_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OCEANIA_1">
+					<eqn>0</eqn>
+				</element>
+				<units>Unitless</units>
+			</aux>
+			<aux name="potential CP imports 2" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 2" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 68" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 74" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 80" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 86" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 92" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 98" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential AP imports 2" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 2" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 104" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 110" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 116" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 122" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 128" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 134" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 140" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 146" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 152" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 158" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 164" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 170" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="Crop Land">
+				<doc>Variable type:  Algebraic calculationUnits:  haDescription:  Sums crop land category across all regions.Notes:</doc>
+				<eqn>NPL_61 +NPL_67 +NPL_73 +NPL_79 +NPL_85 +NPL_91 +NPL_97 +NPL_103 +NPL_109 +NPL_115 +NPL_121 +NPL_127 +NPL_133 +NPL_139 +NPL_145 +NPL_151 +NPL_157 +NPL_163 +NPL_169</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 61" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 67" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 73" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 79" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 85" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 91" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 97" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 103" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 109" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 115" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 121" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="global AP prodn shortfall">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>TOTAL_potential_AP_imports[AnimalProduct] - TOTAL_desired_AP_exports[AnimalProduct]</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="global commodity prodn shortfall">
+				<doc>Variable type:  Algebraic calculationUnits:  Gg/yrDescription:  Global animal product international trade shortfall (overage).  For each product, calculated as the global summation of regional import requirements net of the global summation of regional export potential.Notes:</doc>
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>TOTAL_potential_CP_imports[Commodity] - TOTAL_potential_CP_exports[Commodity]</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<stock name="Avg Commodity Prodn Shortfall" access="output">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<element subscript="Maize">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Wheat">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Rice">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OilCrop">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Sugar">
+					<eqn>0</eqn>
+				</element>
+				<inflow>chg_CP_prodn_shortfall</inflow>
+				<units>gigagrams/yr</units>
+			</stock>
+			<flow name="chg CP prodn shortfall">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>(global_commodity_prodn_shortfall[Commodity] - Avg_Commodity_Prodn_Shortfall[Commodity]) / time_to_perceive_CP</eqn>
+				<units>gigagrams/yr^2</units>
+			</flow>
+			<aux name="GDP mod logic" access="output">
+				<doc>Variable type:  Algebraic calculationUnits:  UnitlessDescription:  Container housing end-user modifications to GDP by region.  User-specified modification ramps in over 5 year period from 2015 to 2020.  Modification logic is then applied to baseline scenarioNotes:  </doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<eqn>1 + ramp_in_logic * (GDP_mod_pct[Region]/100)</eqn>
+				<units>Unitless</units>
+			</aux>
+			<aux name="time to perceive CP">
+				<doc>Variable type:  ConstantUnits:  yrDescription:  time constant for calculation of average production shortfallNotes:</doc>
+				<eqn>1</eqn>
+				<units>years</units>
+			</aux>
+			<stock name="Avg AP Prodn Shortfall" access="output">
+				<doc>Variable type:  Stock, interface to other modulesUnits:  Gg/yrDescription:  Exponentially weighted moving average of global animal product international trade shortfall (overage).  Shortfall feeds into regions and creates pressure to increase regional production.Notes:</doc>
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<element subscript="CowSheepGoat">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Dairy">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Pig">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Poultry">
+					<eqn>0</eqn>
+				</element>
+				<inflow>chg_AP_prodn_shortfall</inflow>
+				<units>gigagrams/yr</units>
+			</stock>
+			<aux name="time to perceive AP">
+				<doc>Variable type:  ConstantUnits:  yrDescription:  time constant for calculation of average production shortfallNotes:</doc>
+				<eqn>1</eqn>
+				<units>years</units>
+			</aux>
+			<flow name="chg AP prodn shortfall">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>(global_AP_prodn_shortfall[AnimalProduct] - Avg_AP_Prodn_Shortfall[AnimalProduct]) / time_to_perceive_AP</eqn>
+				<units>gigagrams/yr^2</units>
+			</flow>
+			<aux name="NPL 127" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 133" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 139" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 145" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 151" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 157" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 163" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 169" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="Abandoned Land">
+				<doc>Variable type:  Algebraic calculationUnits:  haDescription:  Sums abandoned land category across all regions.Notes:</doc>
+				<eqn>NPL_59 +
+NPL_65 +
+NPL_71 +
+NPL_77 +
+NPL_83 +
+NPL_89 +
+NPL_95 +
+NPL_101 +
+NPL_107 +
+NPL_113 +
+NPL_119 +
+NPL_125 +
+NPL_131 +
+NPL_137 +
+NPL_143 +
+NPL_149 +
+NPL_155 +
+NPL_161 +
+NPL_167</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 59" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 65" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 71" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 77" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 83" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 89" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 95" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 101" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 107" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 113" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 119" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 125" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 131" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 137" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 143" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 149" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 155" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 161" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 167" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential CP imports 3" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 3" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="Set Aside Land">
+				<doc>Variable type:  Algebraic calculationUnits:  haDescription:  Sums set aside land category across all regions.Notes:</doc>
+				<eqn>NPL_64 +NPL_70 +NPL_76 +NPL_82 +NPL_88 +NPL_94 +NPL_100 +NPL_106 +NPL_112 +NPL_118 +NPL_124 +NPL_130 +NPL_136 +NPL_142 +NPL_148 +NPL_154 +NPL_160 +NPL_166 +NPL_172</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 64" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 70" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 76" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 82" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 88" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 94" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 100" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential AP imports 3" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 3" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 106" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 112" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 118" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 124" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 130" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential CP imports 4" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 136" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential CP exports 4" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 142" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 148" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 154" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 160" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 166" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 172" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="Builtup Land">
+				<doc>Variable type:  Algebraic calculationUnits:  haDescription:  Sums built up land category across all regions.Notes:</doc>
+				<eqn>NPL_60 +NPL_66 +NPL_72 +NPL_78 +NPL_84 +NPL_90 +NPL_96 +NPL_102 +NPL_108 +NPL_114 +NPL_120 +NPL_126 +NPL_132 +NPL_138 +NPL_144 +NPL_150 +NPL_156 +NPL_162 +NPL_168</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 60" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential AP imports 4" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 4" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 66" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 72" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 78" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 84" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 90" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential CP imports 5" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 96" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential CP exports 5" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 102" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 108" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 114" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 120" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 126" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 132" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 138" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 144" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential AP imports 5" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 5" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="NPL 150" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 156" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 162" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="NPL 168" access="input">
+				<eqn>0</eqn>
+				<units>hectares</units>
+			</aux>
+			<aux name="potential CP imports 6" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 6" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 6" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 6" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 7" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 7" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 7" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 7" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 8" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 8" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 8" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 8" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 9" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 9" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 9" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 9" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 10" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 10" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 10" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 10" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 11" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 11" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 11" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 11" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 12" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 12" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 12" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 12" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 13" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 13" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 13" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 13" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 14" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 14" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 14" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 14" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 15" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 15" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 15" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 15" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 16" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 16" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 16" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 16" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 17" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 17" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 17" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 17" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 18" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 18" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 18" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 18" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP imports 19" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential CP exports 19" access="input">
+				<dimensions>
+					<dim name="Commodity"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potential AP imports 19" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="potentila AP exports 19" access="input">
+				<dimensions>
+					<dim name="AnimalProduct"/>
+				</dimensions>
+				<eqn>0</eqn>
+				<units>gigagrams/yr</units>
+			</aux>
+			<aux name="population mod pct">
+				<doc>Variable type:  Constant; end-user inputUnits:  UnitlessDescription:  User specifies percentage change in regional population relative to baseline scenario.  Change then ramps in over period 2015-2020.Notes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<element subscript="CAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="USA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CCAmerica_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Brazil_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SoAmer_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="REurope_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EU27_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OthCEECIS_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MEASNAfr_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SSAFR_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Russia_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CHIHKG_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="INDIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="JAPAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSEASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MALAINDO_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OCEANIA_1">
+					<eqn>0</eqn>
+				</element>
+				<units>Unitless</units>
+			</aux>
+			<aux name="population mod logic" access="output">
+				<doc>Variable type:  Algebraic calculationUnits:  UnitlessDescription:  Container housing end-user modifications to population by region.  User-specified modification ramps in over 5 year period from 2015 to 2020.  Modification logic is then applied to baseline scenarioNotes:  </doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<eqn>(1 + ramp_in_logic * (population_mod_pct[Region]/100))</eqn>
+				<units>Unitless</units>
+			</aux>
+			<aux name="AP demand mod pct">
+				<doc>Variable type:  Constant; end-user inputUnits:  UnitlessDescription:  User specifies percentage change in animal product demand, relative to baseline scenario.  Change then ramps in over period 2015-2020.Notes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<element subscript="CAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="USA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CCAmerica_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Brazil_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SoAmer_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="REurope_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EU27_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OthCEECIS_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MEASNAfr_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SSAFR_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Russia_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CHIHKG_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="INDIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="JAPAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSEASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MALAINDO_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OCEANIA_1">
+					<eqn>0</eqn>
+				</element>
+				<units>Unitless</units>
+			</aux>
+			<aux name="AP demand mod logic" access="output">
+				<doc>Variable type:  Algebraic calculationUnits:  UnitlessDescription:  Container housing end-user modifications to demand for animal products by region.  User-specified modification ramps in over 5 year period from 2015 to 2020.  Modification logic is then applied to baseline scenarioNotes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<eqn>1 + ramp_in_logic *  (AP_demand_mod_pct[Region]/100)</eqn>
+				<units>Unitless</units>
+			</aux>
+			<aux name="other demand mod pct">
+				<doc>Variable type:  Constant; end-user inputUnits:  UnitlessDescription:  User specifies percentage change in other crop  product demand, relative to baseline scenario.  Change then ramps in over period 2015-2020.Notes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<element subscript="CAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="USA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CCAmerica_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Brazil_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SoAmer_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="REurope_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EU27_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OthCEECIS_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MEASNAfr_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SSAFR_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Russia_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CHIHKG_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="INDIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="JAPAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSEASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MALAINDO_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OCEANIA_1">
+					<eqn>0</eqn>
+				</element>
+				<units>Unitless</units>
+			</aux>
+			<aux name="other demand mod logic" access="output">
+				<doc>Variable type:  Algebraic calculationUnits:  UnitlessDescription:  Container housing end-user modifications to demand for other crop products by region.  User-specified modification ramps in over 5 year period from 2015 to 2020.  Modification logic is then applied to baseline scenarioNotes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<eqn>1 + ramp_in_logic *  (other_demand_mod_pct[Region]/100)</eqn>
+				<units>Unitless</units>
+			</aux>
+			<aux name="other yield mod pct">
+				<doc>Variable type:  Constant; end-user inputUnits:  UnitlessDescription:  User specifies percentage change in regional other crop yield, relative to baseline scenario.  Change then ramps in over period 2015-2020.Notes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<element subscript="CAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="USA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CCAmerica_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Brazil_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SoAmer_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="REurope_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EU27_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OthCEECIS_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MEASNAfr_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SSAFR_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Russia_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CHIHKG_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="INDIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="JAPAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSEASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MALAINDO_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OCEANIA_1">
+					<eqn>0</eqn>
+				</element>
+				<units>Unitless</units>
+			</aux>
+			<aux name="other yield mod logic" access="output">
+				<doc>Variable type:  Algebraic calculationUnits:  UnitlessDescription:  Container housing end-user modifications to other crop yields by region.  User-specified modification ramps in over 5 year period from 2015 to 2020.  Modification logic is then applied to baseline scenarioNotes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<eqn>1 + ramp_in_logic *  (other_yield_mod_pct[Region]/100)</eqn>
+				<units>Unitless</units>
+			</aux>
+			<aux name="CP demand mod pct">
+				<doc>Variable type:  Constant; end-user inputUnits:  UnitlessDescription:  User specifies percentage change in commodity product demand, relative to baseline scenario.  Change then ramps in over period 2015-2020.Notes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<element subscript="CAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="USA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CCAmerica_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Brazil_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SoAmer_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="REurope_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EU27_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OthCEECIS_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MEASNAfr_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SSAFR_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Russia_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CHIHKG_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="INDIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="JAPAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSEASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MALAINDO_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OCEANIA_1">
+					<eqn>0</eqn>
+				</element>
+				<units>Unitless</units>
+			</aux>
+			<aux name="forage yield mod pct">
+				<doc>Variable type:  Constant; end-user inputUnits:  UnitlessDescription:  User specifies percentage change in regional forage yield, relative to baseline scenario.  Change then ramps in over period 2015-2020.Notes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<element subscript="CAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="USA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CCAmerica_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Brazil_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SoAmer_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="REurope_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EU27_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OthCEECIS_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MEASNAfr_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SSAFR_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Russia_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CHIHKG_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="INDIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="JAPAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSEASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MALAINDO_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OCEANIA_1">
+					<eqn>0</eqn>
+				</element>
+				<units>Unitless</units>
+			</aux>
+			<aux name="forage yield mod logic" access="output">
+				<doc>Variable type:  Algebraic calculationUnits:  UnitlessDescription:  Container housing end-user modifications to forage yields by region.  User-specified modification ramps in over 5 year period from 2015 to 2020.  Modification logic is then applied to baseline scenarioNotes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<eqn>1 + ramp_in_logic *  (forage_yield_mod_pct[Region]/100)</eqn>
+				<units>Unitless</units>
+			</aux>
+			<aux name="CP demand mod logic" access="output">
+				<doc>Variable type:  Algebraic calculationUnits:  UnitlessDescription:  Container housing end-user modifications to demand for commodity products by region.  User-specified modification ramps in over 5 year period from 2015 to 2020.  Modification logic is then applied to baseline scenarioNotes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<eqn>1 + ramp_in_logic *  (CP_demand_mod_pct[Region]/100)</eqn>
+				<units>Unitless</units>
+			</aux>
+			<aux name="biofuel mod pct">
+				<doc>Variable type:  Constant; end-user inputUnits:  UnitlessDescription:  User specifies percentage change in land allocated to biofuel production, relative to baseline scenario.  Change then ramps in over period 2015-2020.Notes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<element subscript="CAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="USA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CCAmerica_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Brazil_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SoAmer_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="REurope_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EU27_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OthCEECIS_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MEASNAfr_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SSAFR_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Russia_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CHIHKG_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="INDIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="JAPAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSEASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MALAINDO_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OCEANIA_1">
+					<eqn>0</eqn>
+				</element>
+				<units>Unitless</units>
+			</aux>
+			<aux name="biofuel mod logic" access="output">
+				<doc>Variable type:  Algebraic calculationUnits:  UnitlessDescription:  Container housing end-user modifications to demand for land allocated to biofuel production by region.  User-specified modification ramps in over 5 year period from 2015 to 2020.  Modification logic is then applied to baseline scenarioNotes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<eqn>1 + ramp_in_logic * (biofuel_mod_pct[Region]/100)</eqn>
+				<units>Unitless</units>
+			</aux>
+			<aux name="CP yield mod pct">
+				<doc>Variable type:  Constant; end-user inputUnits:  UnitlessDescription:  User specifies percentage change in regional crop yield, relative to baseline scenario.  Change then ramps in over period 2015-2020.Notes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<element subscript="CAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="USA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CCAmerica_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Brazil_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SoAmer_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="REurope_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EU27_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OthCEECIS_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MEASNAfr_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="SSAFR_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="Russia_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="CHIHKG_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="INDIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="EASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="JAPAN_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="RSEASIA_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="MALAINDO_1">
+					<eqn>0</eqn>
+				</element>
+				<element subscript="OCEANIA_1">
+					<eqn>0</eqn>
+				</element>
+				<units>Unitless</units>
+			</aux>
+			<aux name="CP yield mod logic" access="output">
+				<doc>Variable type:  Algebraic calculationUnits:  UnitlessDescription:  Container housing end-user modifications to crop yields by region.  User-specified modification ramps in over 5 year period from 2015 to 2020.  Modification logic is then applied to baseline scenarioNotes:</doc>
+				<dimensions>
+					<dim name="Region"/>
+				</dimensions>
+				<eqn>1 + ramp_in_logic * (CP_yield_mod_pct[Region]/100)</eqn>
+				<units>Unitless</units>
+			</aux>
+			<aux name="ramp in logic">
+				<eqn>TIME</eqn>
+				<gf>
+					<yscale min="0" max="1"/>
+					<xpts>2015,2016,2017,2018,2019,2020</xpts>
+					<ypts>0,0.2,0.4,0.6,0.8,1</ypts>
+				</gf>
+				<units>Unitless</units>
+			</aux>
+			<aux name="population">
+				<doc>Variable type:  Algebraic calculationUnits:  personDescription: Calculates global population as sum of regional populationsNotes:  </doc>
+				<eqn>Brazil_Pop+CAN_Pop+CHIHKG_Pop+MEAS_Nafr_Pop+CC_Amer_Pop+EU_27_Pop+E_Asia_Pop+INDIA_Pop+JAPAN_Pop+MALA_Indo_Pop+Oceania_Pop+Oth_CEE_CIS_Pop+Russia_Pop+R_Europe_Pop+R_SE_Asia_Pop+R_S_Asia_Pop+S_o_Amer_Pop+S_S_Afr_Pop+USA_Pop_9</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="Brazil Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="CAN Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="CHIHKG Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="MEAS Nafr Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="CC Amer Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="EU 27 Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="E Asia Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="INDIA Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="JAPAN Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="MALA Indo Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="Oceania Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="Oth CEE CIS Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="Russia Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="R Europe Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="R SE Asia Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="R S Asia Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="S o Amer Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="S S Afr Pop" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+			<aux name="USA Pop 9" access="input">
+				<eqn>0</eqn>
+				<units>people</units>
+			</aux>
+		</variables>
+		<views>
+			<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
+				<text_box color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+				<isee:loop_indicator color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+				<numeric_display color="white" background="white" font_size="12pt" border_width="thin" border_style="solid" isee:transparent="false" isee:show_divider="true" isee:show_bounding_box="true" label_side="left"/>
+				<graph color="black" background="white" font_size="12pt" axis_color="#666666" grid_color="#C8C8C8" isee:graph_area_color="white" legend_position="bottom" isee:transparent="false" isee:hide_border="false" axis_title_font_style="normal" axis_title_font_weight="normal" axis_title_text_decoration="none" axis_title_text_align="center" axis_title_vertical_text_align="center" axis_title_font_color="black" axis_title_font_family="Arial" axis_title_font_size="12pt" axis_title_text_padding="2" axis_title_text_border_color="black" axis_title_text_border_width="thin" axis_title_text_border_style="none" axis_label_font_style="normal" axis_label_font_weight="normal" axis_label_text_decoration="none" axis_label_text_align="center" axis_label_vertical_text_align="center" axis_label_font_color="black" axis_label_font_family="Arial" axis_label_font_size="9pt" axis_label_text_padding="2" axis_label_text_border_color="black" axis_label_text_border_width="thin" axis_label_text_border_style="none">
+					<isee:series_styles>
+						<isee:series_style color="blue" thickness="1"/>
+						<isee:series_style color="red" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="fuchsia" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="#008F44" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#FF7F00" thickness="1"/>
+						<isee:series_style color="#7F00FF" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="#0CA0FF" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="lime" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#FF007F" thickness="1"/>
+						<isee:series_style color="aqua" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="#F586FF" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="black" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#C8C8C8" thickness="1"/>
+					</isee:series_styles>
+				</graph>
+				<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous" header_font_style="normal" header_font_weight="normal" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Arial" header_font_size="12pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
+				<button color="black" background="#E0E0E0" font_size="12pt" border_width="thin" border_style="solid" transparent="false" corner_radius="0" isee:flat="false" icon_side="top" isee:highlight_on_hover="false" isee:highlight_color="#959595"/>
+				<isee:annotation color="black" background="#E0E0E0" font_size="12pt" border_width="thin" border_style="solid" transparent="false" corner_radius="0" isee:flat="false" icon_side="top" isee:highlight_on_hover="false" isee:highlight_color="#959595" popup_corner_radius="0" popup_background_color="#FFFECF"/>
+				<slider color="#66CC66" background="#E0E0E0" font_size="12pt" num_ticks="3" label_side="top" wrap_title="true" vertical="false" isee:fancy_appearance="false" isee:show_hover_tip="when_deciding" input_expands="true" input_width="100"/>
+				<isee:stacked_container color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt" padding="6 8" border_color="#999999" border_width="thin" border_style="solid" item_spacing="0" corner_radius="4" selected_item_color="black" selected_item_background="white" item_background="#DDDDDD" transparent_bg="false"/>
+				<isee:dual_slider color="#66CC66" background="silver" font_size="12pt" num_ticks="3" label_side="top" wrap_title="true" isee:show_hover_tip="when_deciding" input_expands="true" input_width="100"/>
+				<isee:sim_speed_slider color="black" background="white"/>
+				<isee:time_slider color="#E95F74" background="silver"/>
+				<isee:pie_input color="black" background="white" font_size="12pt" legend_position="bottom" isee:transparent="false"/>
+				<knob color="#66CC66" background="#E0E0E0" font_size="12pt" label_side="bottom" wrap_title="true"/>
+				<numeric_input color="black" background="#E0E0E0" font_size="12pt" label_side="left" wrap_title="true" input_expands="false" input_width="100"/>
+				<numeric_input color="black" background="#E0E0E0" font_size="12pt" label_side="left" wrap_title="true" input_expands="false" input_width="100"/>
+				<switch color="black" background="#E0E0E0" font_size="12pt" label_side="top" wrap_title="true" isee:appearance="switch" isee:on_color="green"/>
+				<options color="black" background="white" appearance="radio-buttons" arrangement="vertical"/>
+				<graphical_input color="black" background="#E0E0E0" font_size="12pt" isee:show_hover_tip="true"/>
+				<group_input color="black" background="#E0E0E0" font_size="12pt"/>
+				<lamp color="black" background="white" font_size="9pt"/>
+				<gauge color="black" background="white" font_size="9pt" needle_color="#F09F72" bar_color="#EEEEEE" bar_progress_color="black" appearance="radial" num_major_ticks="11" num_minor_ticks="11" show_numeric_value="true"/>
+				<isee:spatial_map color="black" background="white" font_size="12pt"/>
+				<isee:animation_object color="black" background="white" font_size="12pt"/>
+				<isee:navigation_widget color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt" padding="6 8" border_color="#999999" border_width="thin" border_style="solid" item_spacing="6" appearance="tabs" corner_radius="4" selected_item_color="black" selected_item_background="white" item_background="#DDDDDD" transparent_bg="false"/>
+				<isee:shape color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt" border_width="thin" border_style="solid" opacity="1" transparent_background="true" corner_radius="1"/>
+				<isee:selector color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+				<isee:iframe color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt" border_width="thin" border_style="solid"/>
+				<isee:financial_table color="black" background="#E0E0E0" text_align="right" font_size="12pt" hide_border="false" auto_fit="true" first_column_width="250" other_column_width="100" header_font_style="normal" header_font_weight="bold" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Arial" header_font_size="14pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
+			</style>
+			<view isee:show_pages="true" background="white" page_width="768" page_height="588" isee:page_cols="6" isee:page_rows="5" isee:scroll_x="547" isee:popup_graphs_are_comparative="true" isee:enable_non_negative_highlights="false" type="stock_flow">
+				<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
+					<stock color="blue" background="white" font_color="blue" font_size="14pt" label_side="top">
+						<shape type="rectangle" width="45" height="35"/>
+					</stock>
+					<flow color="blue" background="white" font_color="blue" font_size="14pt" label_side="bottom">
+						<shape type="circle" radius="18"/>
+					</flow>
+					<isee:placeholder color="#228B22" background="white" font_color="#228B22" font_size="9pt" label_side="bottom"/>
+					<module color="blue" background="white" font_color="blue" font_size="14pt" label_side="top">
+						<shape type="rectangle" width="55" height="45"/>
+					</module>
+					<aux color="blue" background="white" font_color="blue" font_size="14pt" label_side="bottom">
+						<shape type="circle" radius="18"/>
+					</aux>
+					<group color="red" background="white" font_color="red" font_size="14pt"/>
+					<connector color="#FF007F" background="white" font_color="#FF007F" font_size="9pt" isee:thickness="1"/>
+					<text_box color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+					<isee:loop_indicator color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+					<numeric_display color="white" background="white" font_size="12pt" border_width="thin" border_style="solid" isee:transparent="false" isee:show_divider="true" isee:show_bounding_box="true" label_side="left"/>
+					<graph color="black" background="white" font_size="12pt" axis_color="#666666" grid_color="#C8C8C8" isee:graph_area_color="white" legend_position="bottom" isee:transparent="false" isee:hide_border="false" axis_title_font_style="normal" axis_title_font_weight="normal" axis_title_text_decoration="none" axis_title_text_align="center" axis_title_vertical_text_align="center" axis_title_font_color="black" axis_title_font_family="Arial" axis_title_font_size="12pt" axis_title_text_padding="2" axis_title_text_border_color="black" axis_title_text_border_width="thin" axis_title_text_border_style="none" axis_label_font_style="normal" axis_label_font_weight="normal" axis_label_text_decoration="none" axis_label_text_align="center" axis_label_vertical_text_align="center" axis_label_font_color="black" axis_label_font_family="Arial" axis_label_font_size="9pt" axis_label_text_padding="2" axis_label_text_border_color="black" axis_label_text_border_width="thin" axis_label_text_border_style="none">
+						<isee:series_styles>
+							<isee:series_style color="blue" thickness="1"/>
+							<isee:series_style color="red" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="fuchsia" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="#008F44" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#FF7F00" thickness="1"/>
+							<isee:series_style color="#7F00FF" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="#0CA0FF" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="lime" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#FF007F" thickness="1"/>
+							<isee:series_style color="aqua" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="#F586FF" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="black" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#C8C8C8" thickness="1"/>
+						</isee:series_styles>
+					</graph>
+					<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous" header_font_style="normal" header_font_weight="normal" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Arial" header_font_size="12pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
+				</style>
+				<connector uid="2598" color="black" angle="341.565">
+					<from>NPL_79</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2599" color="black" angle="341.565">
+					<from>NPL_82</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2600" color="black" angle="40.6013">
+					<from>NPL_109</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2601" color="black" angle="159.444">
+					<from>potentila_AP_exports_17</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2602" color="black" angle="40.6013">
+					<from>potential_CP_imports_9</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2603" color="black" angle="229.399">
+					<from>potential_CP_exports_12</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2604" color="black" angle="180">
+					<from>other_yield_mod_pct</from>
+					<to>other_yield_mod_logic</to>
+				</connector>
+				<connector uid="2605" color="black" angle="315">
+					<from>
+						<alias uid="2596"/>
+					</from>
+					<to>global_AP_prodn_shortfall</to>
+				</connector>
+				<connector uid="2606" color="black" angle="26.5651">
+					<from>NPL_96</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2607" color="black" angle="347.471">
+					<from>potential_AP_imports_20</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2608" color="black" angle="0">
+					<from>
+						<alias uid="2594"/>
+					</from>
+					<to>global_AP_prodn_shortfall</to>
+				</connector>
+				<connector uid="2609" color="black" angle="173.66">
+					<from>NPL_144</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2610" color="black" angle="35.5377">
+					<from>potential_AP_imports_5</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2611" color="black" angle="0">
+					<from>NPL_84</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2612" color="black" angle="229.399">
+					<from>NPL_124</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2613" color="black" angle="333.435">
+					<from>NPL_75</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2614" color="black" angle="130.601">
+					<from>potentila_AP_exports_18</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2615" color="black" angle="319.399">
+					<from>NPL_67</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2616" color="black" angle="192.529">
+					<from>NPL_138</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2617" color="black" angle="32.0054">
+					<from>potentila_AP_exports_10</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2618" color="black" angle="180">
+					<from>population_mod_pct</from>
+					<to>population_mod_logic</to>
+				</connector>
+				<connector uid="2619" color="black" angle="102.529">
+					<from>ramp_in_logic</from>
+					<to>biofuel_mod_logic</to>
+				</connector>
+				<connector uid="2620" color="black" angle="281.273">
+					<from>global_AP_prodn_shortfall</from>
+					<to>chg_AP_prodn_shortfall</to>
+				</connector>
+				<connector uid="2621" color="black" angle="173.66">
+					<from>NPL_143</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2622" color="black" angle="310.601">
+					<from>NPL_62</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2623" color="black" angle="0">
+					<from>
+						<alias uid="2596"/>
+					</from>
+					<to>total_interregional_AP_flow</to>
+				</connector>
+				<connector uid="2624" color="black" angle="353.66">
+					<from>EU_27_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2625" color="black" angle="220.601">
+					<from>potential_CP_imports_11</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2626" color="black" angle="159.444">
+					<from>potential_CP_exports_16</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2627" color="black" angle="45">
+					<from>potential_AP_imports_6</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2628" color="black" angle="215.538">
+					<from>NPL_135</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2629" color="black" angle="333.435">
+					<from>NPL_76</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2630" color="black" angle="26.5651">
+					<from>ramp_in_logic</from>
+					<to>CP_yield_mod_logic</to>
+				</connector>
+				<connector uid="2631" color="black" angle="12.5288">
+					<from>INDIA_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2632" color="black" angle="192.529">
+					<from>Russia_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2633" color="black" angle="63.4349">
+					<from>potential_AP_imports_8</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2634" color="black" angle="353.66">
+					<from>potential_CP_exports_5</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2635" color="black" angle="45">
+					<from>
+						<alias uid="2597"/>
+					</from>
+					<to>global_commodity_prodn_shortfall</to>
+				</connector>
+				<connector uid="2636" color="black" angle="139.399">
+					<from>time_to_perceive_CP</from>
+					<to>chg_CP_prodn_shortfall</to>
+				</connector>
+				<connector uid="2637" color="black" angle="319.399">
+					<from>potential_CP_imports_3</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2638" color="black" angle="130.601">
+					<from>NPL_171</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2639" color="black" angle="147.995">
+					<from>NPL_160</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2640" color="black" angle="12.5288">
+					<from>NPL_94</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2641" color="black" angle="54.4623">
+					<from>potential_AP_imports_7</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2642" color="black" angle="130.601">
+					<from>NPL_168</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2643" color="black" angle="192.529">
+					<from>potential_AP_imports_11</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2644" color="black" angle="333.435">
+					<from>NPL_73</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2645" color="black" angle="153.435">
+					<from>R_S_Asia_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2646" color="black" angle="49.3987">
+					<from>NPL_111</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2647" color="black" angle="153.435">
+					<from>S_o_Amer_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2648" color="black" angle="35.5377">
+					<from>NPL_104</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2649" color="black" angle="180">
+					<from>GDP_mod_pct</from>
+					<to>GDP_mod_logic</to>
+				</connector>
+				<connector uid="2650" color="black" angle="0">
+					<from>potential_AP_imports_2</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2651" color="black" angle="12.5288">
+					<from>NPL_90</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2652" color="black" angle="229.399">
+					<from>NPL_121</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2653" color="black" angle="319.399">
+					<from>ramp_in_logic</from>
+					<to>forage_yield_mod_logic</to>
+				</connector>
+				<connector uid="2654" color="black" angle="180">
+					<from>potentila_AP_exports_14</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2655" color="black" angle="153.435">
+					<from>potential_CP_imports_18</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2656" color="black" angle="192.529">
+					<from>NPL_137</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2657" color="black" angle="139.399">
+					<from>NPL_165</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2658" color="black" angle="130.601">
+					<from>potential_CP_exports_19</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2659" color="black" angle="26.5651">
+					<from>potentila_AP_exports_9</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2660" color="black" angle="147.995">
+					<from>NPL_156</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2661" color="black" angle="40.6013">
+					<from>potential_CP_imports_7</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2662" color="black" angle="0">
+					<from>NPL_88</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2663" color="black" angle="139.399">
+					<from>NPL_163</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2664" color="black" angle="319.399">
+					<from>Brazil_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2665" color="black" angle="6.34019">
+					<from>potential_CP_exports_6</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2666" color="black" angle="319.399">
+					<from>
+						<alias uid="2595"/>
+					</from>
+					<to>total_interregional_CP_flow</to>
+				</connector>
+				<connector uid="2667" color="black" angle="153.435">
+					<from>potential_CP_imports_17</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2668" color="black" angle="54.4623">
+					<from>potential_CP_exports_11</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2669" color="black" angle="353.66">
+					<from>ramp_in_logic</from>
+					<to>other_yield_mod_logic</to>
+				</connector>
+				<connector uid="2670" color="black" angle="130.601">
+					<from>NPL_172</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2671" color="black" angle="229.399">
+					<from>NPL_120</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2672" color="black" angle="20.556">
+					<from>NPL_105</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2673" color="black" angle="0">
+					<from>other_demand_mod_pct</from>
+					<to>other_demand_mod_logic</to>
+				</connector>
+				<connector uid="2674" color="black" angle="243.435">
+					<from>ramp_in_logic</from>
+					<to>other_demand_mod_logic</to>
+				</connector>
+				<connector uid="2675" color="black" angle="63.4349">
+					<from>ramp_in_logic</from>
+					<to>population_mod_logic</to>
+				</connector>
+				<connector uid="2676" color="black" angle="226.736">
+					<from>Avg_Commodity_Prodn_Shortfall</from>
+					<to>chg_CP_prodn_shortfall</to>
+				</connector>
+				<connector uid="2677" color="black" angle="220.601">
+					<from>NPL_128</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2678" color="black" angle="212.005">
+					<from>potential_CP_exports_13</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2679" color="black" angle="6.34019">
+					<from>E_Asia_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2680" color="black" angle="220.601">
+					<from>NPL_130</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2681" color="black" angle="206.565">
+					<from>NPL_134</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2682" color="blue" angle="310.601">
+					<from>NPL_59</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2683" color="black" angle="167.471">
+					<from>potential_AP_imports_12</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2684" color="black" angle="324.462">
+					<from>potentila_AP_exports_3</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2685" color="black" angle="0">
+					<from>
+						<alias uid="2597"/>
+					</from>
+					<to>total_interregional_CP_flow</to>
+				</connector>
+				<connector uid="2686" color="black" angle="220.601">
+					<from>NPL_129</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2687" color="black" angle="49.3987">
+					<from>NPL_118</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2688" color="black" angle="192.529">
+					<from>potential_AP_imports_10</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2689" color="black" angle="26.5651">
+					<from>JAPAN_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2690" color="black" angle="130.601">
+					<from>NPL_169</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2691" color="black" angle="186.34">
+					<from>NPL_141</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2692" color="black" angle="319.399">
+					<from>potential_CP_exports_2</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2693" color="black" angle="139.399">
+					<from>NPL_164</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2694" color="black" angle="139.399">
+					<from>NPL_162</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2695" color="black" angle="173.66">
+					<from>R_SE_Asia_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2696" color="black" angle="63.4349">
+					<from>potential_AP_imports_9</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2697" color="black" angle="139.399">
+					<from>potentila_AP_exports_19</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2698" color="black" angle="319.399">
+					<from>NPL_65</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2699" color="black" angle="49.3987">
+					<from>NPL_116</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2700" color="black" angle="353.66">
+					<from>CHIHKG_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2701" color="black" angle="139.399">
+					<from>NPL_161</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2702" color="black" angle="135">
+					<from>potential_CP_exports_18</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2703" color="black" angle="0">
+					<from>CP_demand_mod_pct</from>
+					<to>CP_demand_mod_logic</to>
+				</connector>
+				<connector uid="2704" color="black" angle="180">
+					<from>CP_yield_mod_pct</from>
+					<to>CP_yield_mod_logic</to>
+				</connector>
+				<connector uid="2705" color="black" angle="159.444">
+					<from>NPL_149</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2706" color="black" angle="26.5651">
+					<from>NPL_97</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2707" color="black" angle="144.462">
+					<from>S_S_Afr_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2708" color="black" angle="135">
+					<from>potential_CP_imports_19</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2709" color="black" angle="32.0054">
+					<from>NPL_99</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2710" color="black" angle="341.565">
+					<from>potential_CP_exports_4</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2711" color="black" angle="130.601">
+					<from>NPL_170</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2712" color="black" angle="206.565">
+					<from>potentila_AP_exports_12</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2713" color="black" angle="122.005">
+					<from>potential_AP_imports_17</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2714" color="black" angle="18.4349">
+					<from>potential_CP_imports_6</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2715" color="black" angle="206.565">
+					<from>NPL_136</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2716" color="black" angle="32.0054">
+					<from>MALA_Indo_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2717" color="black" angle="220.601">
+					<from>NPL_125</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2718" color="black" angle="6.34019">
+					<from>potentila_AP_exports_6</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2719" color="black" angle="18.4349">
+					<from>potential_CP_exports_7</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2720" color="black" angle="173.66">
+					<from>potentila_AP_exports_15</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2721" color="black" angle="353.66">
+					<from>potentila_AP_exports_5</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2722" color="black" angle="333.435">
+					<from>potential_CP_exports_3</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2723" color="black" angle="35.5377">
+					<from>MEAS_Nafr_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2724" color="black" angle="139.399">
+					<from>potential_AP_imports_15</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2725" color="black" angle="116.565">
+					<from>potential_AP_imports_18</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2726" color="black" angle="192.529">
+					<from>NPL_142</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2727" color="black" angle="206.565">
+					<from>Oth_CEE_CIS_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2728" color="black" angle="319.399">
+					<from>NPL_66</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2729" color="black" angle="159.444">
+					<from>potential_CP_imports_16</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2730" color="black" angle="153.435">
+					<from>ramp_in_logic</from>
+					<to>AP_demand_mod_logic</to>
+				</connector>
+				<connector uid="2731" color="black" angle="341.565">
+					<from>NPL_81</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2732" color="black" angle="173.66">
+					<from>potential_CP_exports_15</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2733" color="black" angle="192.529">
+					<from>potential_CP_exports_14</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2734" color="black" angle="159.444">
+					<from>NPL_154</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2735" color="black" angle="167.471">
+					<from>potentila_AP_exports_16</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2736" color="black" angle="341.565">
+					<from>potentila_AP_exports_4</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2737" color="black" angle="319.399">
+					<from>NPL_68</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2738" color="black" angle="206.565">
+					<from>Avg_AP_Prodn_Shortfall</from>
+					<to>chg_AP_prodn_shortfall</to>
+				</connector>
+				<connector uid="2739" color="black" angle="6.34019">
+					<from>potential_AP_imports_3</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2740" color="black" angle="49.3987">
+					<from>NPL_115</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2741" color="black" angle="324.462">
+					<from>CAN_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2742" color="black" angle="40.6013">
+					<from>NPL_112</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2743" color="black" angle="40.6013">
+					<from>NPL_107</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2744" color="black" angle="310.601">
+					<from>NPL_61</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2745" color="black" angle="220.601">
+					<from>NPL_126</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2746" color="black" angle="353.66">
+					<from>NPL_87</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2747" color="black" angle="40.6013">
+					<from>NPL_110</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2748" color="black" angle="147.995">
+					<from>NPL_155</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2749" color="black" angle="35.5377">
+					<from>NPL_102</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2750" color="black" angle="341.565">
+					<from>potential_CP_imports_4</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2751" color="black" angle="12.5288">
+					<from>NPL_92</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2752" color="black" angle="319.399">
+					<from>NPL_69</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2753" color="black" angle="26.5651">
+					<from>NPL_98</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2754" color="black" angle="315">
+					<from>potential_CP_exports1</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2755" color="black" angle="144.462">
+					<from>potential_AP_imports_14</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2756" color="black" angle="212.005">
+					<from>R_Europe_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2757" color="black" angle="147.995">
+					<from>potential_CP_exports_17</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2758" color="black" angle="54.4623">
+					<from>ramp_in_logic</from>
+					<to>GDP_mod_logic</to>
+				</connector>
+				<connector uid="2759" color="black" angle="180">
+					<from>forage_yield_mod_pct</from>
+					<to>forage_yield_mod_logic</to>
+				</connector>
+				<connector uid="2760" color="black" angle="192.529">
+					<from>NPL_140</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2761" color="black" angle="40.6013">
+					<from>potential_CP_exports_9</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2762" color="black" angle="310.601">
+					<from>NPL_64</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2763" color="black" angle="333.435">
+					<from>NPL_72</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2764" color="black" angle="310.601">
+					<from>NPL_63</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2765" color="black" angle="32.0054">
+					<from>potential_AP_imports_4</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2766" color="black" angle="139.399">
+					<from>USA_Pop_9</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2767" color="black" angle="310.601">
+					<from>potential_AP_exports_1</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2768" color="black" angle="26.5651">
+					<from>potential_CP_exports_8</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2769" color="black" angle="333.435">
+					<from>NPL_74</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2770" color="black" angle="173.66">
+					<from>NPL_146</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2771" color="black" angle="116.565">
+					<from>potential_AP_imports_16</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2772" color="black" angle="319.399">
+					<from>potentila_AP_exports_2</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2773" color="black" angle="18.4349">
+					<from>NPL_93</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2774" color="black" angle="49.3987">
+					<from>NPL_113</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2775" color="black" angle="206.565">
+					<from>potential_CP_imports_14</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2776" color="black" angle="330.255">
+					<from>global_commodity_prodn_shortfall</from>
+					<to>chg_CP_prodn_shortfall</to>
+				</connector>
+				<connector uid="2777" color="black" angle="341.565">
+					<from>NPL_77</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2778" color="black" angle="0">
+					<from>
+						<alias uid="2595"/>
+					</from>
+					<to>global_commodity_prodn_shortfall</to>
+				</connector>
+				<connector uid="2779" color="black" angle="49.3987">
+					<from>NPL_117</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2780" color="black" angle="229.399">
+					<from>NPL_123</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2781" color="black" angle="35.5377">
+					<from>NPL_101</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2782" color="black" angle="147.995">
+					<from>NPL_157</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2783" color="black" angle="234.462">
+					<from>potentila_AP_exports_11</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2784" color="black" angle="319.399">
+					<from>NPL_70</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2785" color="black" angle="215.538">
+					<from>Oceania_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2786" color="black" angle="0">
+					<from>biofuel_mod_pct</from>
+					<to>biofuel_mod_logic</to>
+				</connector>
+				<connector uid="2787" color="black" angle="49.3987">
+					<from>potential_CP_exports_10</from>
+					<to>TOTAL_potential_CP_exports</to>
+				</connector>
+				<connector uid="2788" color="black" angle="159.444">
+					<from>NPL_151</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2789" color="black" angle="147.995">
+					<from>NPL_159</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2790" color="black" angle="173.66">
+					<from>potential_CP_imports_15</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2791" color="black" angle="173.66">
+					<from>NPL_148</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2792" color="black" angle="310.601">
+					<from>potential_CP_imports_20</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2793" color="black" angle="159.444">
+					<from>NPL_153</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2794" color="black" angle="173.66">
+					<from>NPL_147</from>
+					<to>Near_Pristine_Land</to>
+				</connector>
+				<connector uid="2795" color="black" angle="49.3987">
+					<from>NPL_114</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2796" color="black" angle="0">
+					<from>NPL_86</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2797" color="black" angle="0">
+					<from>NPL_83</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2798" color="black" angle="54.4623">
+					<from>potential_CP_imports_10</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2799" color="black" angle="159.444">
+					<from>NPL_152</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2800" color="black" angle="341.565">
+					<from>NPL_80</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2801" color="black" angle="0">
+					<from>NPL_85</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2802" color="black" angle="159.444">
+					<from>NPL_150</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2803" color="black" angle="220.601">
+					<from>NPL_127</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2804" color="black" angle="35.5377">
+					<from>NPL_103</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2805" color="black" angle="161.565">
+					<from>potential_AP_imports_13</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2806" color="black" angle="215.538">
+					<from>potential_CP_imports_12</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2807" color="black" angle="40.6013">
+					<from>NPL_108</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2808" color="black" angle="229.399">
+					<from>NPL_119</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2809" color="black" angle="116.565">
+					<from>time_to_perceive_AP</from>
+					<to>chg_AP_prodn_shortfall</to>
+				</connector>
+				<connector uid="2810" color="black" angle="26.5651">
+					<from>NPL_95</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2811" color="black" angle="310.601">
+					<from>NPL_60</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2812" color="black" angle="12.5288">
+					<from>NPL_89</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2813" color="black" angle="0">
+					<from>AP_demand_mod_pct</from>
+					<to>AP_demand_mod_logic</to>
+				</connector>
+				<connector uid="2814" color="black" angle="26.5651">
+					<from>NPL_100</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2815" color="black" angle="206.565">
+					<from>NPL_132</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2816" color="black" angle="198.435">
+					<from>potential_CP_imports_13</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2817" color="black" angle="192.529">
+					<from>NPL_139</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2818" color="black" angle="139.399">
+					<from>NPL_166</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2819" color="black" angle="0">
+					<from>potential_CP_imports_5</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2820" color="black" angle="35.5377">
+					<from>NPL_106</from>
+					<to>Set_Aside_Land</to>
+				</connector>
+				<connector uid="2821" color="black" angle="173.66">
+					<from>NPL_145</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2822" color="black" angle="341.565">
+					<from>NPL_78</from>
+					<to>Builtup_Land</to>
+				</connector>
+				<connector uid="2823" color="black" angle="353.66">
+					<from>CC_Amer_Pop</from>
+					<to>population</to>
+				</connector>
+				<connector uid="2824" color="black" angle="206.565">
+					<from>NPL_131</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2825" color="black" angle="206.565">
+					<from>NPL_133</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2826" color="black" angle="229.399">
+					<from>NPL_122</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2827" color="black" angle="20.556">
+					<from>potentila_AP_exports_8</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2828" color="black" angle="333.435">
+					<from>NPL_71</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2829" color="black" angle="200.556">
+					<from>potentila_AP_exports_13</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2830" color="black" angle="35.5377">
+					<from>
+						<alias uid="2594"/>
+					</from>
+					<to>total_interregional_AP_flow</to>
+				</connector>
+				<connector uid="2831" color="black" angle="12.5288">
+					<from>potentila_AP_exports_7</from>
+					<to>TOTAL_desired_AP_exports</to>
+				</connector>
+				<connector uid="2832" color="black" angle="130.601">
+					<from>NPL_167</from>
+					<to>Abandoned_Land</to>
+				</connector>
+				<connector uid="2833" color="black" angle="147.995">
+					<from>NPL_158</from>
+					<to>Latent_Land</to>
+				</connector>
+				<connector uid="2834" color="black" angle="206.565">
+					<from>ramp_in_logic</from>
+					<to>CP_demand_mod_logic</to>
+				</connector>
+				<connector uid="2835" color="black" angle="35.5377">
+					<from>potential_CP_imports_8</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<connector uid="2836" color="black" angle="12.5288">
+					<from>NPL_91</from>
+					<to>Crop_Land</to>
+				</connector>
+				<connector uid="2837" color="black" angle="110.556">
+					<from>potential_AP_imports_19</from>
+					<to>TOTAL_potential_AP_imports</to>
+				</connector>
+				<connector uid="2838" color="black" angle="310.601">
+					<from>potential_CP_imports_2</from>
+					<to>TOTAL_potential_CP_imports</to>
+				</connector>
+				<text_box color="black" font_weight="bold" font_size="18pt" padding="1" appearance="transparent" uid="2839" x="1" y="3" width="746" height="40">NREL Global Land Use Change Model (NGLUCKM)</text_box>
+				<text_box color="black" font_style="italic" font_size="18pt" padding="1" appearance="transparent" uid="2840" x="1" y="40" width="577" height="38">Global calculations module</text_box>
+				<graphics_frame fill="none" uid="2841" x="17" y="440" width="328" height="110">
+					<image width="338" height="116" size_to_parent="false" isee:transparency="0">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVIAAAB0CAIAAABYNS0nAAAP+0lEQVR4nO2d34sb1xXHv1P6F3jzEJcY7HRGbhdB+7Z4RB5CvRBpTbuFoOSlEbhh5BbKKqSLoV3W1JhikxSPKLSVSAzrvDgiUBVqzcOm5MFI9j4U8iA2tWbcNXET56Hrf+H2Ye6MZubOjEa/duXe82EfpDv3nPM95+rs/PDqWmGMgSAImfjWcQsgCOKoobYnCOmgticI6aC2JwjpoLYnCOmgticI6aC2JwjpoLYnCOmgticI6aC2JwjpoLYnCOmgticI6aC2JwjpyND2B9Zrpz/cnb+UMN/8+YLxzj+OOipByACd7QlCOr49he3n75z+0x0AWLn9+OerkcH8ypv4KvfH7V+ciZt5YL32K/zke3+9+gkAvPlh8+aPRHOCIObC5Gf73V//6YvfXH36uNn9zVdv/frzyODTd3CnnzYT/b/+LXf16ePm0w9X7ty0/p1sThDEbJm47T/vfPLST1ZfBPCy8eM3P/nnLh9cedd4EQB+tLadT5kJwJv58nd+0P/6UaI5QRAzZpqL/P9cfdW4yl+/lDvAKp5+kf/OrzLNjOPg6RdAib95Uf0eBlOIIwgiiWnaPnhL73Ly+/1/PgJeHjnzIM7fmZPfx9fem2+cfwHFKdQRBJHAxBf5Pyy9vveH5jcA8I8PT15wb86Dg3ev9lNmjvTpmxMEMWMynu333jq9N3z3+i+fvv/D1fd/2Tm9ffL3AF7a/uzn7hl+OPj6T7fzXyEyGJgZy+r7V50L2yd/D+RX3qR7e4KYD8q8Nsw+sF579et3o3cBBEEcP9Pc24t88+cL297F+Uvbn21TzxPEAjK3sz1BEIsK/XEuQUgHtT1BSAe1PUFIB7U9QUgHtT1BSAe1PUFIB7U9QUjHsbV9VYE1hblVhzNqJNHKQaE6Yz3jKpls8iQy4pKdVyziOWHstleUSX5mTrs1eiSLlU+Dzez7flmUTDZ5fjKeo1jEDGBjMr5FvIkB1mGM2UzXmQ4GMOjMdkcMZrgjBmPeiEvHYKbNOkbgqDfuj/DX4QmhOcEQblBfT4fbGp2gZWjQ96+b/LhtehF1ZiYrsU2m6wxuoMyyYw6JRRPmpCcbSUEUNr+UiUVgIe7tdxgYgwncda8Um1hnYAwdoBp35V1swNBhN+JGLJQAFmcesvJCDIMCAKw2TBuMYVNLGAz433H9O6i0YDMwBruM1nKakl4eLHBZkUU2HFzzDpl91D21oaIJ5mnJiikIwuaXMrEILEDb56ECAHL+N20N/ikprqM/5g47zgDGOn+dZu6FyIW/3lvcREuDoqByN37QGQBNfuei1dAfADZQ5imoG+hupCnRl8eXrWJnmUes9bzBcNFGZB1ONiYFQdgRpEwcIwvQ9iJN/nTNaiOfAwD0+ROjdnOEqZpDs81fD82zo6LLwGygFXhGFRhEDrrJT2iMobsBaIHJFhTv+dlYSlImO3VU/LO9PrZ57ORoCjGT5p4ycYxM0vZzf55noK1AUVACGkVARRnQXFeGN6cHrRB+euyOFNHxFHJzcU5yZKsKRYGiIb/Fz2bRwSK29oepVS1AxU6Zy1NK6DSyKcksW10DavzQfh77dpyTWPOkZMUU0usw85SJ42bxvnjroPAeuo3REwmCmIyFvMgnCGKeLN7ZniCIOUNne4KQDmp7gpAOanuCkA5qe4KQDmp7gpAOanuCkA5qe4KQDmp7gpAOanuCkA5qe4KQDmp7gpCOsf/HW2WinfHoL/8JYnGY5Gw/7sZdyZ6sqhL7dW8AsOr1WWzGmhZiapMs+icQMDocd+7UC1HfmcJNaZ5V7mxWkJg9C3uRbz3nm7H6+osNNqv9JnxXKcXJEm5K84w87yv4/8xitL1TLxQKBUVRFEUp1B3AqpaavZpWtQBYVSVwxJ9btQSr4OSUk5ZTLyihWIkmoZmBc6NVLUROZBEnAf2BU3QkUJx+L6w7w6ryA25A7ipYHKBdDXnwwiU6z2buaQ2VJDwYWZdIuepxKxiWNrPLCmJcFqPtAaC8wxhjtonWXQfFRsfQTbtRhFUtge+2vIOKtxnrFuMnpZAVnPo1Ptk2+9fiLzGdeqVVdveNtsutSrWaaBKZ+d5+onYh7lC/TyCRDkreRz6sn6OulfttC7DafR37NmC1++U1f5OvkPMm1mM8pDjPZG61+6bNGGObmhM/KK5LuFytZVNcQT/xwAoSx8Bke+mNRyan+ZwKAGpkK1tn0Eez5PrRar3+wAGgL2vxVurGzvI1b25CIHsfXgupG91uo5FoEpm5mbwFbIa4zqBvrPPPeXHdcBNJytrte2eA8la537bCXR+GO416SHGexby4WW5piqIo4R2Eh4Mx6xIp10YuJfHhChLHwdhtP+7zvFFP9Uag5vK6e4phjDHW3Uj49AMAnHqhgh1+1k3YZBba8vDEZlUVRUk0icystMCb1Yps4JslrprLN9vePUK7yVsyCXWt3L9W2V9eK66V0W4jsevnhbrRjbkKGQ5CXJdIuap8D93xEieOhMW5yBfo1bRC3Sk2tvY1/8Ih/XZQXSuj5k6uJG4yq27s8JOWopTQsc1Ek8jM7o7nvT3cwDclrqvfn1RsdFDynY26wFXXyughp0LNodlfFro+4nxcRpnzu3Gtlt/aUGMHxXWJlKux7q/gOIkTRwHtpUcQ0rHAZ3uCIOYDtT1BSAe1PUFIB7U9QUgHtT1BSAe1PUFIB7U9QUgHtT1BSAe1PUFIB7U9QUjHMbW9U4eiDH9S/tK+Xh/ly4JSnUqMGMKpYyYbw4wWP+nkOcE1TF3SebEAwqoFRD4aTh2TbR3gVtuqzubDNg7jt32wXbP/iBgdMAbGwDooCaXkWBi9Q0sRrDF2FmkhHFT2kfpVv0k9z2rynPA1TFnS+bGwwibAq3ZxE633jjr4BN+hnYGJbTKjM3xr6sz9FqcBBjCAHzWE1/7bIR0Gg/vUdT5HN70oRsgqGNfQmR0OIWozww4jGsSIHS9cJ1W8aCjKCBIxD0YJvhazC1bAtLmfpOIMNXglzaJcJCgppYbuisc6jAQ1dabrDEaasHQZYrJDn4KkWOd8xOCFTXIupiD6DH7UfTEJScyJxbi3dzd5cOqAewlgo38NDtDoQDfRKMYciqfM56DF5zTBrylQir+V8EP42PtwN4Fw6miVuXm5hULB0xD0Fo7Y7sNmYAyaM0p82FCU4SOaB6MEX8fCK9BBTcM6A2PI17j4SHFEDVZ1dMoiQUlpNazEO4wtV34rdJ6PF5YsQ0zW9xlyVYEVJ2A4Zx3NFOdeCqJPcSRY7bUy2ke6w9hitP2gj5wKdQPL16AoUDRE9qhJORQk7+7oosLfK8ZY5y/WDQyy3UG5YsB31+GDG12UAW+XmKG3SMTNMjQFioLApjTx4kWpSYjmwSixEYPwCmjQDRRjDyUXZ9AfnbJIUJJYw2aJ3/fVevEOY8sV2Y0nVliKjNhkXZ+DflSSKGAYrsi3Woh37qUg+hRHjpVFaHsLtTyKQL0A7PDfmpE9alIOpdPke7yg3eTN3B/woM0Ek1yer4q2jJbXTFYVtd7wV7LvLYK6Acbg7j8zvfgk82CUSMSR2QURixMhlx+dskhQklhD0/ae6bD4ByhZypVFWKQyScnm8lFJooBhOAf9OOeivIhPcSSInbxN43yYqO2nf56HwG99pYROAwDWyqhpUBQoFeQBb48aFOrxh7JgeGrRQRFQ14AaFAXBHXLcED7aMt8fR91AucXNS+DXh0FvIlUFigKthq2NscVzGVZITGxZglGCr2Ozy14csRTFxuiURcEhSUIN97UR/4KTpVwxwlJlxCbru4pIEgUMw1XinYvyIj7FkWC1gxcvR8ORPkk4YiIPDjObMd0YPWtedBIflc2WCYsjclSCR5AqY2bJzoNj+LwtwkX+oqFiZ/no/ynVo4hu3AlkcVkQwQsiY3ys91DePOKYtJceQUgHne0JQjqo7QlCOqjtCUI6qO0JQjqo7QlCOqjtCUI6qO0JQjqo7QlCOqjtCUI6qO0JQjqOq+2f1D9aVUz350bKDgPW3sfZ/zhenGxZq4p5qf5sQpVRz88+LliRr/v3qqn6J4ly3FhWUsUyJTu/LJJXYW6xjpsp1yKJb49roJirE4Rhtd3Au17VvIILu8z90rFzQzFvdGqX47552GsPsLmSMYg4udd+eD7B81ikyNAbtQm+Qz9ulOeI+WVxlPX5/1iLRMZue0R7eDTR3xTOvf65W11/owH1sn3uUmXvSVHrFfZOdYs6AMu6NFj5S27vSvMQTesUW3lS2Hucf/hpE8DZ37GijmcfJ04u8j60rCtNoGnCPHfQGqB3eKZTuwxrtfQQCPnhnvVzt7aeXSw9BJbetn/2hi/QsnwZAO5VzStN+HN6VfPeeu1y0bmh/P1TAMaF3YZvGR60vND6uVvdlVMAnL1L2v1HALD0tvnCB75+KyzS2btU8fQXh6pGzUlNLWIecHjeOItlbh6q8MaJ4RqKuURrJWQR/AhEDz37uHD3Mxw+6iFRYeoqRPXEVEO+tUhj3G/q4ub5KU3sB1XDDs+wr+sPvmSHd/RO1x3odKrmIWOsa9y+YzPGDu/oN693+KHzhs3SJg/pGjevdxizH1ThTravY2jl+eGeu8bN864wfijoJyrjS/O2F/Tm9c5QA7MPv/TNQoOB0LwCh3d0T7D9oKo/uMOjCCKH+gMVGz0nJTWxDsORrnGzah4mVNh1KOYi1koMERTGD3llHJbCG4kxT14FQY9YDSnXIpFjuLdXl870D58ER5zDg9FmZ1/hu5lp5yPmWdBPnHIDGRo/7Qz9cM+nlpfOr4/cNsqbnHshNFxcebV1e1UxVyt2/KBzeICHV9zHGdr9R/3DJ3j2GDndDaiu/MX/PR0r0tXvk2VOSmqieWBEXz87ogYxucTNiSm1y4k3dk7cVsxVxbxYO/QGXzilAn5h08wRXYVYPZFqyLwWIsfxSE99JX//YtV/YOLc0O6f2XIL/d8nDgD02g8Fq4f33AcYlv1pfmnU5KTIS2eaNn8aNPQzE0680a3tsrfexqDnxA1i6Yx+7har7bo/3ZVTOHF6ONm5oVj3soucMhHRPDDyZPBfb15ChVUxl3EUOnuXKvgtq+2y2i1zKavC9HRG6pF5LUQmubef7KleAL1Ru1X/aFX5u/vWe+p2Qi/jomZ+4N7ScA4/0D6CvQacRdtcLQE4+zumAkieHLgtj6Je7tirign4fjI+5PdlJODfXxkXdtXYQRVbfmh+h/nGTu6SZn7gFeGVtnlF+wj2z6IinUNEERKJmZOCWAf4I9/Vl1BGwnJ45kIugaN8FcQQnrX2Km5fVO4D+K5xFngGBO5UkxUmr4KgR9ytRtK1SOA52V0n8EiDIIgpoT/XIQjpeE7O9gRBzA462xOEdFDbE4R0UNsThHRQ2xOEdFDbE4R0UNsThHRQ2xOEdFDbE4R0UNsThHRQ2xOEdFDbE4R0UNsThHRQ2xOEdPwPGs5fs9DEOCA=</image>
+				</graphics_frame>
+				<aux color="#008F44" font_color="#008F44" label_angle="98.1335" x="1096" y="842" name="TOTAL potential CP exports"/>
+				<aux color="#008F44" font_color="#008F44" label_angle="56.4219" x="313" y="864" name="TOTAL potential CP imports"/>
+				<aux color="#008F44" font_color="#008F44" label_angle="359.411" x="997" y="164" name="total interregional CP flow"/>
+				<aux x="1895" y="868" name="Near Pristine Land"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1691" y="648" name="NPL 63"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1692" y="706" name="NPL 69"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1695" y="756" name="NPL 75"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="109" y="637" name="potential CP imports 20"/>
+				<aux color="blue" font_style="italic" font_weight="bold" label_side="left" x="889" y="640" name="potential CP exports1"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1694" y="808" name="NPL 81"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1700" y="859" name="NPL 87"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1702" y="905" name="NPL 93"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1704" y="952" name="NPL 99"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="142" y="1246" name="potential AP imports 20"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="895" y="1214" name="potential AP exports 1"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1704" y="998" name="NPL 105"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1706" y="1043" name="NPL 111"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1708" y="1087" name="NPL 117"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2088" y="663" name="NPL 123"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2089" y="713" name="NPL 129"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2090" y="767" name="NPL 135"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2093" y="824" name="NPL 141"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2092" y="881" name="NPL 147"/>
+				<aux color="#008F44" font_color="#008F44" label_angle="129.403" x="1135" y="1473" name="TOTAL desired AP exports"/>
+				<aux color="#008F44" font_color="#008F44" label_angle="92.4787" x="333" y="1318" name="TOTAL potential AP imports"/>
+				<aux color="#008F44" font_color="#008F44" label_side="right" x="995" y="257" name="total interregional AP flow"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2091" y="938" name="NPL 153"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2092" y="992" name="NPL 159"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2093" y="1036" name="NPL 165"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2100" y="1098" name="NPL 171"/>
+				<aux x="2671" y="871" name="Latent Land"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2467" y="651" name="NPL 62"/>
+				<aux color="red" font_color="red" label_angle="95.5998" x="3758" y="229" name="GDP mod pct"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="117" y="685" name="potential CP imports 2"/>
+				<aux color="blue" font_style="italic" font_weight="bold" label_angle="185.162" x="887" y="676" name="potential CP exports 2"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2468" y="709" name="NPL 68"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2471" y="759" name="NPL 74"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2470" y="811" name="NPL 80"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2476" y="862" name="NPL 86"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2478" y="908" name="NPL 92"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2480" y="955" name="NPL 98"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="145" y="1316" name="potential AP imports 2"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="892" y="1278" name="potentila AP exports 2"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2480" y="1001" name="NPL 104"/>
+				<aux color="blue" font_style="italic" font_weight="bold" label_angle="183.982" x="2482" y="1046" name="NPL 110"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2484" y="1090" name="NPL 116"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2864" y="666" name="NPL 122"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2865" y="716" name="NPL 128"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2866" y="770" name="NPL 134"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2869" y="827" name="NPL 140"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2868" y="884" name="NPL 146"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2867" y="941" name="NPL 152"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2868" y="995" name="NPL 158"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2869" y="1039" name="NPL 164"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2876" y="1101" name="NPL 170"/>
+				<aux x="1916" y="1444" name="Crop Land"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1712" y="1224" name="NPL 61"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1713" y="1282" name="NPL 67"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1716" y="1332" name="NPL 73"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1715" y="1384" name="NPL 79"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1721" y="1435" name="NPL 85"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1723" y="1481" name="NPL 91"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1725" y="1528" name="NPL 97"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1725" y="1574" name="NPL 103"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1727" y="1619" name="NPL 109"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1729" y="1663" name="NPL 115"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2109" y="1239" name="NPL 121"/>
+				<aux color="#008F44" font_color="#008F44" label_side="right" x="965" y="348" name="global AP prodn shortfall"/>
+				<aux color="#008F44" font_color="#008F44" label_angle="119.901" x="964" y="50" name="global commodity prodn shortfall"/>
+				<stock x="1218" y="43" name="Avg Commodity Prodn Shortfall"/>
+				<flow color="blue" label_angle="173.903" x="1150.75" y="45" name="chg CP prodn shortfall">
+					<pts>
+						<pt x="1094" y="45"/>
+						<pt x="1195.5" y="45"/>
+					</pts>
+				</flow>
+				<aux color="black" font_color="black" x="3601" y="229" name="GDP mod logic"/>
+				<aux x="1195" y="117" name="time to perceive CP"/>
+				<stock x="1054" y="429" name="Avg AP Prodn Shortfall"/>
+				<aux x="980" y="482" name="time to perceive AP"/>
+				<flow color="blue" label_angle="189.609" x="979.75" y="422" name="chg AP prodn shortfall">
+					<pts>
+						<pt x="916" y="422"/>
+						<pt x="1031.5" y="422"/>
+					</pts>
+				</flow>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2110" y="1289" name="NPL 127"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2111" y="1343" name="NPL 133"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2114" y="1400" name="NPL 139"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2113" y="1457" name="NPL 145"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2112" y="1514" name="NPL 151"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2113" y="1568" name="NPL 157"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2114" y="1612" name="NPL 163"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2121" y="1674" name="NPL 169"/>
+				<aux x="2678" y="1442" name="Abandoned Land"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2474" y="1222" name="NPL 59"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2475" y="1280" name="NPL 65"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2478" y="1330" name="NPL 71"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2477" y="1382" name="NPL 77"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2483" y="1433" name="NPL 83"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2485" y="1479" name="NPL 89"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2487" y="1526" name="NPL 95"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2487" y="1572" name="NPL 101"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2489" y="1617" name="NPL 107"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2491" y="1661" name="NPL 113"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2871" y="1237" name="NPL 119"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2872" y="1287" name="NPL 125"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2873" y="1341" name="NPL 131"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2876" y="1398" name="NPL 137"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2875" y="1455" name="NPL 143"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2874" y="1512" name="NPL 149"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2875" y="1566" name="NPL 155"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2876" y="1610" name="NPL 161"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2883" y="1672" name="NPL 167"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="118" y="738" name="potential CP imports 3"/>
+				<aux color="blue" font_style="italic" font_weight="bold" label_angle="179.372" x="890" y="726" name="potential CP exports 3"/>
+				<aux x="1899" y="2040" name="Set Aside Land"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1695" y="1820" name="NPL 64"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1696" y="1878" name="NPL 70"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1699" y="1928" name="NPL 76"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1698" y="1980" name="NPL 82"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1704" y="2031" name="NPL 88"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1706" y="2077" name="NPL 94"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1708" y="2124" name="NPL 100"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="141" y="1363" name="potential AP imports 3"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="885" y="1344" name="potentila AP exports 3"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1708" y="2170" name="NPL 106"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1710" y="2215" name="NPL 112"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1712" y="2259" name="NPL 118"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2092" y="1835" name="NPL 124"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2093" y="1885" name="NPL 130"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="118" y="793" name="potential CP imports 4"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2094" y="1939" name="NPL 136"/>
+				<aux color="blue" font_style="italic" font_weight="bold" label_angle="186.442" x="886" y="776" name="potential CP exports 4"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2097" y="1996" name="NPL 142"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2096" y="2053" name="NPL 148"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2095" y="2110" name="NPL 154"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2096" y="2164" name="NPL 160"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2097" y="2208" name="NPL 166"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2104" y="2270" name="NPL 172"/>
+				<aux x="2671" y="2064" name="Builtup Land"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2467" y="1844" name="NPL 60"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="138" y="1420" name="potential AP imports 4"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="888" y="1405" name="potentila AP exports 4"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2468" y="1902" name="NPL 66"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2471" y="1952" name="NPL 72"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2470" y="2004" name="NPL 78"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2476" y="2055" name="NPL 84"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2478" y="2101" name="NPL 90"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="115" y="858" name="potential CP imports 5"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2480" y="2148" name="NPL 96"/>
+				<aux color="blue" font_style="italic" font_weight="bold" label_angle="240.003" x="886" y="813" name="potential CP exports 5"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2480" y="2194" name="NPL 102"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2482" y="2239" name="NPL 108"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2484" y="2283" name="NPL 114"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2864" y="1859" name="NPL 120"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2865" y="1909" name="NPL 126"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2866" y="1963" name="NPL 132"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2869" y="2020" name="NPL 138"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2868" y="2077" name="NPL 144"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="133" y="1475" name="potential AP imports 5"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="885" y="1457" name="potentila AP exports 5"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2867" y="2134" name="NPL 150"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2868" y="2188" name="NPL 156"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2869" y="2232" name="NPL 162"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="2876" y="2294" name="NPL 168"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="119" y="924" name="potential CP imports 6"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="885" y="854" name="potential CP exports 6"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="137" y="1529" name="potential AP imports 6"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="885" y="1513" name="potentila AP exports 6"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="127" y="970" name="potential CP imports 7"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="890" y="903" name="potential CP exports 7"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="139" y="1583" name="potential AP imports 7"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="884" y="1561" name="potentila AP exports 7"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="112" y="1014" name="potential CP imports 8"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="889" y="960" name="potential CP exports 8"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="136" y="1643" name="potential AP imports 8"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="877" y="1604" name="potentila AP exports 8"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="111" y="1066" name="potential CP imports 9"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="901" y="1017" name="potential CP exports 9"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="130" y="1697" name="potential AP imports 9"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="885" y="1650" name="potentila AP exports 9"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="105" y="1126" name="potential CP imports 10"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="896" y="1075" name="potential CP exports 10"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="517" y="1218" name="potential AP imports 10"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="890" y="1696" name="potentila AP exports 10"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="537" y="654" name="potential CP imports 11"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="891" y="1131" name="potential CP exports 11"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="522" y="1277" name="potential AP imports 11"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1336" y="1239" name="potentila AP exports 11"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="542" y="695" name="potential CP imports 12"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1288" y="622" name="potential CP exports 12"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="527" y="1327" name="potential AP imports 12"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1336" y="1316" name="potentila AP exports 12"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="541" y="738" name="potential CP imports 13"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1320" y="699" name="potential CP exports 13"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="524" y="1377" name="potential AP imports 13"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1342" y="1381" name="potentila AP exports 13"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="537" y="794" name="potential CP imports 14"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1315" y="789" name="potential CP exports 14"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="518" y="1433" name="potential AP imports 14"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1339" y="1436" name="potentila AP exports 14"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="545" y="842" name="potential CP imports 15"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1321" y="867" name="potential CP exports 15"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="516" y="1481" name="potential AP imports 15"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1360" y="1495" name="potentila AP exports 15"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="541" y="925" name="potential CP imports 16"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1316" y="933" name="potential CP exports 16"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="511" y="1545" name="potential AP imports 16"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1348" y="1554" name="potentila AP exports 16"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="550" y="975" name="potential CP imports 17"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1325" y="991" name="potential CP exports 17"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="510" y="1606" name="potential AP imports 17"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1344" y="1610" name="potentila AP exports 17"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="548" y="1033" name="potential CP imports 18"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1323" y="1065" name="potential CP exports 18"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="517" y="1659" name="potential AP imports 18"/>
+				<aux color="blue" font_style="italic" font_weight="bold" label_angle="0.601492" x="1333" y="1663" name="potentila AP exports 18"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="547" y="1109" name="potential CP imports 19"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1333" y="1125" name="potential CP exports 19"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="504" y="1734" name="potential AP imports 19"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="1334" y="1710" name="potentila AP exports 19"/>
+				<aux color="red" font_color="red" label_angle="95.5998" x="3671" y="170" name="population mod pct"/>
+				<aux color="black" font_color="black" x="3566" y="170" name="population mod logic"/>
+				<aux color="red" font_color="red" label_angle="95.5998" x="3295" y="313" name="AP demand mod pct"/>
+				<aux color="black" font_color="black" x="3406" y="313" name="AP demand mod logic"/>
+				<aux color="red" font_color="red" label_angle="95.5998" x="3287" y="460" name="other demand mod pct"/>
+				<aux color="black" font_color="black" x="3398" y="460" name="other demand mod logic"/>
+				<aux color="red" font_color="red" label_angle="95.5998" x="3777" y="376" name="other yield mod pct"/>
+				<aux color="black" font_color="black" x="3565" y="376" name="other yield mod logic"/>
+				<aux color="red" font_color="red" label_angle="95.5998" x="3295" y="388" name="CP demand mod pct"/>
+				<aux color="red" font_color="red" label_angle="95.5998" x="3778" y="454" name="forage yield mod pct"/>
+				<aux color="black" font_color="black" x="3572" y="454" name="forage yield mod logic"/>
+				<aux color="black" font_color="black" x="3406" y="388" name="CP demand mod logic"/>
+				<aux color="red" font_color="red" label_angle="95.5998" x="3275" y="229" name="biofuel mod pct"/>
+				<aux color="black" font_color="black" x="3386" y="229" name="biofuel mod logic"/>
+				<aux color="red" font_color="red" label_angle="95.5998" x="3774" y="306" name="CP yield mod pct"/>
+				<aux color="black" font_color="black" x="3562" y="306" name="CP yield mod logic"/>
+				<aux color="red" font_color="red" x="3487" y="353" name="ramp in logic"/>
+				<aux color="blue" label_angle="98.1335" x="3467" y="851" name="population"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3195" y="668" name="Brazil Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3197" y="722" name="CAN Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3196" y="774" name="CHIHKG Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3199" y="1118" name="MEAS Nafr Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3198" y="813" name="CC Amer Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3196" y="865" name="EU 27 Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3194" y="927" name="E Asia Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3196" y="970" name="INDIA Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3192" y="1026" name="JAPAN Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3194" y="1069" name="MALA Indo Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3655" y="661" name="Oceania Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3657" y="715" name="Oth CEE CIS Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3658" y="826" name="Russia Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3640" y="772" name="R Europe Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3658" y="875" name="R SE Asia Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3658" y="922" name="R S Asia Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3668" y="977" name="S o Amer Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3658" y="1027" name="S S Afr Pop"/>
+				<aux color="blue" font_style="italic" font_weight="bold" x="3654" y="1083" name="USA Pop 9"/>
+				<alias font_style="italic" uid="2594" x="859" y="339" width="18" height="18">
+					<of>TOTAL_desired_AP_exports</of>
+				</alias>
+				<alias font_style="italic" uid="2595" x="843" y="41" width="18" height="18">
+					<of>TOTAL_potential_CP_imports</of>
+				</alias>
+				<alias font_style="italic" uid="2596" x="865" y="248" width="18" height="18">
+					<of>TOTAL_potential_AP_imports</of>
+				</alias>
+				<alias font_style="italic" uid="2597" x="841" y="155" width="18" height="18">
+					<of>TOTAL_potential_CP_exports</of>
+				</alias>
+			</view>
+		</views>
+	</model>
+</xmile>
+
